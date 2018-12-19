@@ -3,8 +3,8 @@ var socket = io();
 socket.on('connect',function (){
   console.log('connected to server');
 
-  socket.emit('createEmail', {
-    to: 'mira@ex.com',
+  socket.emit('createMessage', {
+    from: 'ankit',
     text: 'You are fired!!'
 
   });
@@ -13,6 +13,6 @@ socket.on('disconnect',function(){
   console.log('disconnected from server');
 });
 
-socket.on('newEmail',function(email){ // server to client
-  console.log('New Email',email);
+socket.on('newMessage',function(message){ // server to client
+  console.log('New message',message);
 });
