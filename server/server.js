@@ -1,6 +1,7 @@
 //npm i socket.io --save
 const http = require('http');
 const path = require('path'); //inbuilt
+
 const socketIO = require('socket.io');
 const publicPath= path.join(__dirname, '../public');// path for public  dir
 //can be done directly __dirname/../public
