@@ -2,35 +2,31 @@ var socket = io();
 // removed arrow functions from client side to make it work on all browsers
 socket.on('connect',function (){
   console.log('connected to server');
-
-  // socket.emit('createMessage', {
-  //   from : 'ankit',
-  //   text: 'You are fired!!'
-  //
-  // });
 });
 socket.on('disconnect',function(){
   console.log('disconnected from server');
 });
 
 socket.on('newMessage',function(message){ // server to client
-  console.log('New message',message);
   var formattedTime=moment(message.createdAt).format('LT');
-  var li = jQuery('<li></li>');
-  li.text(`${message.from} at ${formattedTime} : ${message.text}`);
-
-  jQuery('#messages').append(li);
+  var template= jQuery('#message-template').html();
+  var html= Mustache.render(template,{
+    text: message.text,
+    from : message.from,
+    createdAt: formattedTime
+  });
+  jQuery('#messages').append(html);
 });
 
 socket.on('newLocationMessage', function(message){
     var formattedTime=moment(message.createdAt).format('LT');
-    var li = jQuery('<li></li>');
-    var a= jQuery('<a target="_blank">My current Location</a>');
-
-    li.text(`${message.from} at ${formattedTime}: `);
-    a.attr('href',message.url);
-    li.append(a);
-    jQuery('#messages').append(li);
+    var locationTemplate= jQuery('#location-message-template').html();
+    var html= Mustache.render(locationTemplate,{
+      url: message.url,
+      from : message.from,
+      createdAt: formattedTime
+    });
+    jQuery('#messages').append(html);
 });
 
 jQuery('#message-form').on('submit',function(e){  //e for event
