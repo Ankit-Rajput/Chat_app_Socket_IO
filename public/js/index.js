@@ -15,12 +15,21 @@ socket.on('disconnect',function(){
 
 socket.on('newMessage',function(message){ // server to client
   console.log('New message',message);
+
+  var li = jQuery('<li></li>');
+  li.text(`${message.from} : ${message.text}`);
+
+  jQuery('#messages').append(li);
 });
 
-socket.emit('createMessage', {
-  from: 'luci' ,
-  text : 'hi'
-}, function(data){
-  console.log("Got it" , data);
 
+jQuery('#message-form').on('submit',function(e){  //e for event
+    e.preventDefault();
+
+    socket.emit('createMessage', {
+      from: 'user' ,
+      text : jQuery('[name=message]').val()
+    }, function(){
+      // console.log("Got it" , data);
+});
 });
