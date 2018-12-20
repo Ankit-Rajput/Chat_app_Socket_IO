@@ -33,7 +33,7 @@ io.on('connection',(socket)=>{
       // });
 
 
-      callback('this is from server ');
+      callback();
     });
 
     socket.on('createLocationMeassage',(coords)=>{
@@ -48,10 +48,6 @@ io.on('connection',(socket)=>{
 server.listen(port,()=>{
   console.log( `server is up on port: ${port}`);
 });
-
-
-
-
 
 
 
